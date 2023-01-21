@@ -11,7 +11,7 @@ public class Victorine : MonoBehaviour
     public TMP_Text ScoreText;
     public List<Question> Questions;
 
-    private string _points = "";
+    private string _points = "Results:\n";
     private int _pointsCount = 0;
     private int _currentQuestion = 0;
     private bool _activatable = true;
@@ -56,7 +56,7 @@ public class Victorine : MonoBehaviour
 
     private IEnumerator WaitAfterAnswer()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2.0f);
         _activatable = true;
     }
 
