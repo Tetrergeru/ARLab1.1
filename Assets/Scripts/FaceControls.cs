@@ -36,7 +36,7 @@ public class FaceControls : MonoBehaviour
         }
     }
 
-    Direction LookingTo(Vector3 dir)
+    public static Direction LookingTo(Vector3 dir)
     {
         var eps = 0.15;
 
@@ -63,7 +63,7 @@ public class FaceControls : MonoBehaviour
     }
 }
 
-enum Direction
+public enum Direction
 {
     None,
     Up,

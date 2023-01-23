@@ -8,7 +8,6 @@ public class Victorine : MonoBehaviour
 {
     public TMP_Text PointsText;
     public TMP_Text Question;
-    public TMP_Text ScoreText;
     public List<Question> Questions;
 
     private string _points = "Results:\n";
@@ -18,15 +17,19 @@ public class Victorine : MonoBehaviour
     private static string GoodChar = "<color=\"green\">+</color>";
     private static string BadChar = "<color=\"red\">-</color>";
 
+    public bool IsOver { get; private set; }
+    public int PointsCount => _pointsCount;
+    public int QuestionsCount => Questions.Count;
+
     void Start()
     {
-        ScoreText.text = "";
         UpdateUI();
+        StartCoroutine(WaitAfterAnswer());
     }
 
     public void Answer(bool answer)
     {
-        if (!_activatable) return;
+        if (!_activatable || IsOver) return;
 
         if (Questions[_currentQuestion].A == answer)
         {
@@ -38,16 +41,14 @@ public class Victorine : MonoBehaviour
             _points += BadChar;
         }
 
-        _activatable = false;
         _currentQuestion += 1;
 
         UpdateUI();
 
         if (_currentQuestion >= Questions.Count)
         {
-            Debug.Log($"{_currentQuestion}: {_pointsCount}/{Questions.Count}");
             Question.text = "";
-            ScoreText.text = $"Score:\n{_pointsCount}/{Questions.Count}";
+            IsOver = true;
             return;
         }
 
@@ -56,7 +57,8 @@ public class Victorine : MonoBehaviour
 
     private IEnumerator WaitAfterAnswer()
     {
-        yield return new WaitForSeconds(2.0f);
+        _activatable = false;
+        yield return new WaitForSeconds(1.5f);
         _activatable = true;
     }
 
